@@ -57,9 +57,13 @@ Gem.path.unshift(Merb.root / "gems")
 # dependency "RedCloth", "> 3.0"
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
+
+dependencies 'merb-action-args', 'merb_helpers'
+
 Merb::BootLoader.after_app_loads do
   # Add dependencies here that must load after the application loads:
 
+  dependencies 'dm-migrations'
   # dependency "magic_admin" # this gem uses the app's model classes
 end
 
@@ -72,7 +76,7 @@ end
 # if you need a database.
 
 # Uncomment for DataMapper ORM
-# use_orm :datamapper
+use_orm :datamapper
 
 # Uncomment for ActiveRecord ORM
 # use_orm :activerecord
