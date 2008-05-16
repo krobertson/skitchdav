@@ -1,0 +1,14 @@
+<h1>Entries controller, edit action</h1>
+
+<p>Edit this file in <tt>app/views/entries/edit.html.erb</tt></p>
+
+<%= error_messages_for :entry %>
+
+<% form_for(@entry, :action => url(:entry, @entry)) do %>
+  <p>
+    <%= submit_button "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', url(:entry, @entry) %> |
+<%= link_to 'Back', url(:entries) %>

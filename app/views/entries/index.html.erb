@@ -1,0 +1,18 @@
+<h1>Entries controller, index action</h1>
+
+<p>Edit this file in <tt>app/views/entries/index.html.erb</tt></p>
+
+<table>
+  <tr>
+  </tr>
+
+<% for entry in @entries %>
+  <tr>
+    <td><%= link_to 'Show', url(:entry, entry) %></td>
+    <td><%= link_to 'Edit', url(:edit_entry,  entry) %></td>
+    <td><%= delete_button :entry, entry %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'New', url(:new_entry) %>
