@@ -26,8 +26,6 @@ module Merb
     def dimensions(style)
       geoms ||= {}
       geoms[style] ||= Paperclip::Geometry.parse(style)
-      puts ".#{geoms[style].width.class}."
-      geoms[style]
     end
   end
 end

@@ -3,14 +3,17 @@
 	<h4><span>thumbnail settings</span></h4>
 	<p>
 		These settings will be used on all new images that are uploaded.<br/>
-		Change settings: <input type="text" name="new_width" value="300" size="5">
-			x <input type="text" name="new_height" value="300" size="5"><br/>
-		<input type="submit" name="update" value="Update" />
+		<% form_tag(:action => url(:controller => 'entries', :action => 'settings')) do %>
+			Change settings:
+				<%= text_field :name => 'width', :value => dimensions(Settings.instance.dimensions).width.to_i, :size => '5' %>
+				x <%= text_field :name => 'height', :value => dimensions(Settings.instance.dimensions).height.to_i, :size => '5' %><br/>
+				<%= submit_button 'Update' %><br/>
+		<% end %>
 	</p>
 </div>
 <div class="viewtable">
 	<h4><span>upload file</span></h4>
-	<% form_for(@entry, { :action => url(:entries), :multipart => true } ) do |f| %>
+	<% form_for(@entry, { :action => url(:entries), :multipart => true } ) do %>
 		<p>
 			Upload a new file.<br/>
 			<%= file_field :name => 'image' %><br/>
