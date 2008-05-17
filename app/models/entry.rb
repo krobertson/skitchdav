@@ -4,7 +4,7 @@ class Entry
   
   property :id, Integer, :serial => true
   property :created_at, DateTime
-  has_attached_file :image, :styles => { :thumb => '300x300>' }
+  has_attached_file :image, :styles => { :thumb => '300x300>', :square => '100x100#' }
   property :image_dimensions, String
   
   before :save, :before_save

@@ -29,7 +29,8 @@
 <p>
 	<ol class="indent">
 		<% for entry in @entries %>
-			<li><a href="<%= url(:entry, entry) %>"><%=entry.image_file_name %></a> (<%=entry.created_at.strftime('%m/%d @ %I:%M%p').downcase %>)</li>
+<!--			<li><a href="<%= url(:entry, entry) %>"><%=entry.image_file_name %></a> (<%=entry.created_at.strftime('%m/%d @ %I:%M%p').downcase %>)</li> -->
+<a href="<%= url(:entry, entry) %>"><img src="<%= entry.image.url(:square) %>" /></a>
 		<% end %>
 	</ol>
 </p>

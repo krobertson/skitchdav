@@ -52,7 +52,7 @@ class Entries < Application
 		  raise BadRequest
 	  end
   end
-  
+
   def resize(id)
     # protect from get requests
     raise BadRequest unless request.post?
