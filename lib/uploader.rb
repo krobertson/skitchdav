@@ -5,22 +5,37 @@ class Uploader
 
   def call(env)
     request = Merb::Request.new(env)
-    if request.path =~ %r{/files} and request.put?
-      #return [405, {}, 'Method not allowed, must use a POST request'] unless request.method.downcase == 'post'
+    if request.path =~ %r{/files}
+      filename = request.path.split('/').last
 
-      entry = Entry.new
-      file = Tempfile.open('wb')
-      file.binmode
-      file.write(request.raw_post)
-      entry.image = file
+      puts "UPLOADER: #{request.method} #{request.path}"
 
-      if entry.valid?
-        entry.save
+      if request.put?
+        entry = Entry.new
+        file = Tempfile.open('wb')
+        file.binmode
+        file.write(request.raw_post)
+        entry.image = Mash.new({'content_type' => 'image/jpeg', 'filename' => filename, 'size' => file.size, 'tempfile' => file})
+
+        if entry.valid?
+          entry.save
+          ret = [201, {}, 'Created']
+        else
+          ret = [500, {}, entry.errors.to_json]
+        end
+
         file.close
         file.unlink
-        [201, {}, 'Created']
-      else
-        [500, {}, entry.errors.to_json]
+        return ret
+      elsif request.get? or request.head?
+        entry = Entry.first(:image_file_name => filename)
+        headers = { 'Content-Type' => entry.image_content_type, 'Content-Length' => entry.image_file_size.to_s }
+        content = request.head? ? '' : IO.read(entry.image.path)
+        return [200, headers, content]
+      elsif request.delete?
+        entry = Entry.first(:image_file_name => filename)
+        entry.destroy
+        return [200, {}, 'Deleted']        
       end
     else
       @app.call(env)

@@ -3,6 +3,7 @@ class Entries < Application
 
   def index
     @entries = Entry.all
+    @entry = Entry.new
     display @entries
   end
 
@@ -12,47 +13,38 @@ class Entries < Application
     display @entry
   end
 
-  def new
-    only_provides :html
-    @entry = Entry.new
-    render
-  end
-
-  def edit(id)
-    only_provides :html
-    @entry = Entry[id]
-    raise NotFound unless @entry
-    render
-  end
-
   def create
     @entry = Entry.new(params[:entry])
+    @entry.image = params[:image]
     if @entry.save
-      redirect url(:entry, @entry)
+  		flash[:notice] = "File has been uploaded and is ready for use!"
+      redirect url(:entries)
     else
-      render :new
+      render :index
     end
   end
 
-  def update
-    @entry = Entry.get()
-    raise NotFound unless @entry
-    @entry.attributes = params[:entry]
-    if  @entry.save
-      redirect url(:entry, @entry)
-    else
-      raise BadRequest
-    end
-  end
-
-  def destroy
-    @entry = Entry.get()
+  def destroy(id)
+    @entry = Entry[id]
     raise NotFound unless @entry
     if @entry.destroy
-      redirect url(:entry)
+      redirect url(:entries)
     else
       raise BadRequest
     end
+  end
+  
+  def resize(id)
+    @entry = Entry[id]
+    raise NotFound unless @entry
+    @entry.image_dimensions = "#{params[:width]}x#{params[:height]}>"
+    @entry.image.reprocess!
+    if @entry.save
+      flash[:notice] = "Resized the image."
+  		redirect url(:entry, @entry)
+		else
+		  raise BadRequest
+	  end
   end
 
 end

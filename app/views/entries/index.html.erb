@@ -1,18 +1,32 @@
-<h1>Entries controller, index action</h1>
+<h3>Settings</h3>
+<div class="viewtablenolb">
+	<h4><span>thumbnail settings</span></h4>
+	<p>
+		These settings will be used on all new images that are uploaded.<br/>
+		Change settings: <input type="text" name="new_width" value="300" size="5">
+			x <input type="text" name="new_height" value="300" size="5"><br/>
+		<input type="submit" name="update" value="Update" />
+	</p>
+</div>
+<div class="viewtable">
+	<h4><span>upload file</span></h4>
+	<% form_for(@entry, { :action => url(:entries), :multipart => true } ) do |f| %>
+		<p>
+			Upload a new file.<br/>
+			<%= file_field :name => 'image' %><br/>
+		    <%= submit_button 'Upload file' %>
+		</p>
+	<% end %>
+</div>
 
-<p>Edit this file in <tt>app/views/entries/index.html.erb</tt></p>
+<br class="clear" />
 
-<table>
-  <tr>
-  </tr>
-
-<% for entry in @entries %>
-  <tr>
-    <td><%= link_to 'Show', url(:entry, entry) %></td>
-    <td><%= link_to 'Edit', url(:edit_entry,  entry) %></td>
-    <td><%= delete_button :entry, entry %></td>
-  </tr>
-<% end %>
-</table>
-
-<%= link_to 'New', url(:new_entry) %>
+<h3>Available files</h3>
+<p>Below are the previously uploaded files.
+<p>
+	<ol class="indent">
+		<% for entry in @entries %>
+			<li><a href="<%= url(:entry, entry) %>"><%=entry.image_file_name %></a> (<%=entry.created_at.strftime('%m/%d @ %I:%M%p').downcase %>)</li>
+		<% end %>
+	</ol>
+</p>

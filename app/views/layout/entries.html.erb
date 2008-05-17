@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+		<title>skitchdav</title>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+		<link rel="stylesheet" type="text/css" href="/stylesheets/lightbox.css" media="screen" />
+		<script type="text/javascript" src="/javascripts/lightbox.js"></script>
+	</head>
+	<body>
+		<div id="header">
+			<div id="header_inner" class="fluid">
+				<div id="logo">
+					<h1>Skitch<span>DAV</span></h1>
+					<h2>A Linked Labs Project</h2>
+				</div>
+			</div>
+		</div>
+		<div id="main">
+
+		<div id="main_inner" class="fluid">
+			<div id="primaryContent_columnless">
+				<div id="columnA_columnless">
+					
+					<% if flash[:warning] %><p><span class="notice warn"><%= flash[:warning] %></span></p><% end %>
+					<% if flash[:notice] %><p><span class="notice info"><%= flash[:notice] %></span></p><% end %>
+
+				    <%= catch_content :for_layout %>
+		
+				</div>
+			</div>
+			<br class="clear" />
+		</div>
+	</div>
+	<div id="footer" class="fluid">
+		Copyright &copy; 2008 linked labs. All rights reserved. Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree Design</a>.
+		</div>
+	</body>
+</html>

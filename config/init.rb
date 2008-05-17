@@ -59,7 +59,7 @@ Gem.path.unshift(Merb.root / "gems")
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
 
 dependencies 'merb-action-args', 'merb_helpers', 'merb-assets'
-dependency 'lib/uploader'
+dependencies 'lib/uploader', 'gems/merb_has_flash/lib/merb_has_flash'
 
 Merb::BootLoader.after_app_loads do
   # Add dependencies here that must load after the application loads:
@@ -77,7 +77,7 @@ end
 
 # Uncomment for DataMapper ORM
 use_orm :datamapper
-dependencies 'dm-migrations', 'dm-validations'
+dependencies 'dm-migrations'
 dependencies 'gems/dm-paperclip/lib/dm-paperclip'
 
 # Uncomment for ActiveRecord ORM

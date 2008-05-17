@@ -1,7 +1,45 @@
-<h1>Entries controller, show action</h1>
+<h3>File: <%=@entry.image.original_filename %></h3>
 
-<p>Edit this file in <tt>app/views/entries/show.html.erb</tt></p>
+<div class="sample">
+	<a href="<%= @entry.image.url(:original) %>" rel="lightbox" title="<%= @entry.image.original_filename %>">
+		<img src="<%= @entry.image.url(:thumb) %>" alt="<%= @entry.image.original_filename %>" />
+	</a>
+</div>
+	<p>
+		Uploaded: <%=@entry.created_at.strftime('%m/%d/%y @ %I:%M%p').downcase %><br/>
+		Original: 1234x1234<br/>
+		Thumbnail: 2345x2345<br/>
+		<% form_tag(:action => url(:controller => 'entries', :action => 'resize', :id => @entry.id)) do %>
+			Change settings:
+				<%= text_field :name => 'width', :value => dimensions(@entry.image_dimensions).width.to_i, :size => '5' %>
+				x <%= text_field :name => 'height', :value => dimensions(@entry.image_dimensions).height.to_i, :size => '5' %><br/>
+				<%= submit_button 'Resize' %><br/>
+		<% end %>
 
+		<%= delete_button :entry, @entry, "Delete" %>
 
-<%= link_to 'Edit',  url(:edit_entry,  @entry) %> |
-<%= link_to 'Back', url(:entries) %>
+		<%= link_to 'Back to index', url(:entries) %>
+	</p>
+	<br class="clear" />
+
+<div class="viewtable">
+<h4><span>HTML</span></h4>
+<textarea cols="50" rows="8">
+<%= to_html(@entry) %>
+</textarea>
+</div>
+
+<div class="viewtable">
+<h4><span>Lightbox</span></h4>
+<textarea cols="50" rows="8">
+<%= to_lightbox(@entry) %>
+</textarea>
+<br/>
+</div>
+
+<div class="viewtable">
+<h4><span>BBCode</span></h4>
+<textarea cols="50" rows="8">
+<%= to_bbcode(@entry) %>
+</textarea>
+</div>
